@@ -1,3 +1,5 @@
+require_relative "bill"
+
 groceries = {
   "Apple" => 2,
   "Tomato" => 1,
@@ -6,9 +8,9 @@ groceries = {
   "Pickles" => 2
 }
 
-def display_products(groceries)
-  groceries.each do |product, price|
-    puts "#{product} - #{price}€"
+def display(products, groceries)
+  products.each_with_index do |product, index|
+    puts "#{index + 1} - #{product} (#{groceries[product]}€)"
   end
 end
 
@@ -33,22 +35,19 @@ end
 
 print_line
 
-display_products(groceries)
+# Print all articles in stock
+display(groceries.keys, groceries)
 
 print_line
 
+# Print bought articles
 list = shopping_list(groceries)
+display(list, groceries)
 
 print_line
 
-sum = 0
-
-list.each_with_index do |product, index|
-  price = groceries[product]
-  puts "#{index+1} - #{product} (#{price}€)"
-  sum += price
-end
-print_line
-
-puts "TOTAL #{sum} euros(ttc) - TVA #{(sum * 0.07 * 100).round / 100.0} euros"
+# Print bill
+total = bill(list, groceries)
+tva = (total * (1.0 - 1/1.07) * 100).round / 100.0
+puts "TOTAL: #{total}€ (ttc) - TVA #{tva}€"
 
