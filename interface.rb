@@ -48,6 +48,6 @@ print_line
 
 # Print bill
 total = bill(list, groceries)
-tva = (total * 0.07 * 100).round / 100.0
+tva = (total * (1.0 - 1/1.07) * 100).round / 100.0
 puts "TOTAL: #{total}€ (ttc) - TVA #{tva}€"
 
